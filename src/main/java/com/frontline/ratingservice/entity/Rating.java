@@ -1,10 +1,12 @@
-package com.frontline.ratingservice.model;
+package com.frontline.ratingservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "RATING")
 public class Rating {
     @Id
     @GeneratedValue
