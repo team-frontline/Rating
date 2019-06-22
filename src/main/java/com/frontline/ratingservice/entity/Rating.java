@@ -1,9 +1,8 @@
 package com.frontline.ratingservice.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.frontline.ratingservice.dto.RatingDTO;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "RATING")
@@ -11,8 +10,23 @@ public class Rating {
     @Id
     @GeneratedValue
     private Integer ratingId;
+
+    @Column
     private String productId;
+
+    @Column
+    private Integer numberOfRaters = 1;
+
+    @Column
     private Integer rating;
+
+    public Rating() {
+    }
+
+    public Rating(RatingDTO ratingDTO) {
+        this.productId = ratingDTO.getProductId();
+        this.rating = ratingDTO.getRating();
+    }
 
     public Integer getRatingId() {
         return ratingId;
@@ -20,6 +34,10 @@ public class Rating {
 
     public String getProductId() {
         return productId;
+    }
+
+    public Integer getNumberOfRaters() {
+        return numberOfRaters;
     }
 
     public Integer getRating() {
@@ -36,5 +54,9 @@ public class Rating {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public void setNumberOfRaters(Integer numberOfRaters) {
+        this.numberOfRaters = numberOfRaters;
     }
 }

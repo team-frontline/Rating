@@ -22,8 +22,29 @@ public class RatingService {
         return ratingDTOList;
     }
 
-    public RatingDTO getRatingByProductId(String productId){
-        Optional<Rating> ratingMatch = ratingDAO.getRatingByProductId(productId).stream().findAny();
+    public RatingDTO getRatingByProductId(String productId) {
+        Optional<Rating> ratingMatch = ratingDAO.findByProductId(productId).stream().findAny();
         return ratingMatch.map(RatingDTO::new).orElse(null);
+    }
+
+    public RatingDTO saveRating(RatingDTO ratingDTO) {
+        Rating savedRating = ratingDAO.save(new Rating(ratingDTO));
+        return new RatingDTO(savedRating);
+    }
+
+    public RatingDTO updateRating(RatingDTO ratingDTO) {
+        Optional<Rating> ratingMatch = ratingDAO.findByProductId(ratingDTO.getProductId()).stream().findAny();
+
+        if (ratingMatch.isPresent()) {
+            Rating ratingToUpdate = ratingMatch.get();
+            int raterRating = ratingToUpdate.getRating() * ratingToUpdate.getNumberOfRaters();
+            ratingToUpdate.setNumberOfRaters(ratingToUpdate.getNumberOfRaters() + 1);
+            float newRating = (raterRating + ratingDTO.getRating()) / ratingToUpdate.getNumberOfRaters();
+            ratingToUpdate.setRating(Math.round(newRating));
+
+            ratingDAO.save(ratingToUpdate);
+            return new RatingDTO(ratingToUpdate);
+        }
+        return null;
     }
 }
