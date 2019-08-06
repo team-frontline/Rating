@@ -17,39 +17,32 @@ public class RatingsController {
 
     @ResponseBody
     @RequestMapping("/")
-    public String getAllRatings() {
+    public List<RatingDTO> getAllRatings() {
         List<RatingDTO> allRatingsList = ratingService.getAllRatings();
-        StringBuilder sb = new StringBuilder();
-        for (RatingDTO ratingDTO : allRatingsList
-        ) {
-            sb.append(ratingDTO.toString()).append("\n");
-        }
-        return sb.toString();
+        return allRatingsList;
     }
 
     @ResponseBody
     @RequestMapping(value = "/get/{productId}", method = RequestMethod.GET)
-    public String getRatingByProductId(@PathVariable("productId") String productId) {
+    public RatingDTO getRatingByProductId(@PathVariable("productId") String productId) {
         RatingDTO matchingRatingDTO = ratingService.getRatingByProductId(productId);
-        if (matchingRatingDTO != null) {
-            return matchingRatingDTO.toString();
-        } else return "No rating found for product id: " + productId;
+        return matchingRatingDTO;
     }
 
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveRating(@RequestBody RatingDTO ratingDTO) {
-        return ratingService.saveRating(ratingDTO).toString();
+    public RatingDTO saveRating(@RequestBody RatingDTO ratingDTO) {
+        return ratingService.saveRating(ratingDTO);
     }
 
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateRating(@RequestBody RatingDTO ratingDTO) {
+    public RatingDTO updateRating(@RequestBody RatingDTO ratingDTO) {
         RatingDTO updatedRatingDTO = ratingService.updateRating(ratingDTO);
         if (updatedRatingDTO != null) {
-            return updatedRatingDTO.toString();
+            return updatedRatingDTO;
         }
-        return "no matching record to update";
+        return null;
     }
 
 }
