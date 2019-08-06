@@ -15,7 +15,7 @@ public class Rating {
     private String productId;
 
     @Column
-    private Integer numberOfRaters = 1;
+    private Integer numberOfRaters;
 
     @Column
     private Integer rating;
@@ -26,6 +26,7 @@ public class Rating {
     public Rating(RatingDTO ratingDTO) {
         this.productId = ratingDTO.getProductId();
         this.rating = ratingDTO.getRating();
+        this.numberOfRaters = ratingDTO.getNumberOfRaters();
     }
 
     public Integer getRatingId() {
