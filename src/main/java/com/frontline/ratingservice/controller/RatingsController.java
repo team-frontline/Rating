@@ -45,4 +45,11 @@ public class RatingsController {
         return null;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/delete/{productId}", method = RequestMethod.DELETE)
+    public RatingDTO deleteRating(@PathVariable String productId) {
+        RatingDTO deletedRating = ratingService.deleteRating(productId);
+        return deletedRating;
+    }
+
 }

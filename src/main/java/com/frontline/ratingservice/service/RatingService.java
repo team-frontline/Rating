@@ -47,4 +47,11 @@ public class RatingService {
         }
         return null;
     }
+
+    public RatingDTO deleteRating(String productId) {
+
+       Rating deletedRating = ratingDAO.findByProductId(productId).get(0);
+       ratingDAO.delete(deletedRating);
+       return new RatingDTO(deletedRating);
+    }
 }
